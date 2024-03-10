@@ -13,7 +13,7 @@ import java.sql.Timestamp;
 @NoArgsConstructor
 @Builder
 public class ClubDto {
-    private Integer id;
+    private Long id;
     private String name;
     private String abbreviation;
     private Date foundingDate;

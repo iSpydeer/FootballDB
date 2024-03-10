@@ -19,7 +19,7 @@ import java.sql.Date;
 public class PlayerEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer id;
+    private Long id;
 
     @Column(nullable = false)
     private String firstName;
@@ -28,6 +28,8 @@ public class PlayerEntity {
     private String lastName;
 
     private Date birthDate;
+
+    @Enumerated
     private Position position;
 
     @ManyToOne(cascade = CascadeType.ALL)

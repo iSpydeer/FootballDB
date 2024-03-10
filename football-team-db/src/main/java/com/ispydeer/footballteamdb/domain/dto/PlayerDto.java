@@ -13,7 +13,7 @@ import java.sql.Date;
 @NoArgsConstructor
 @Builder
 public class PlayerDto {
-    private Integer id;
+    private Long id;
     private String firstName;
     private String lastName;
     private Date birthDate;
