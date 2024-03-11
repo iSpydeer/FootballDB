@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.sql.Date;
+import java.time.LocalDate;
 
 @Data
 @AllArgsConstructor
@@ -24,5 +25,5 @@ public class ClubEntity {
     private String name;
     private String abbreviation;
     private Date foundingDate;
-    private int totalTrophies;
+    private Integer totalTrophies;
 }

@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 
 import java.sql.Date;
 import java.sql.Timestamp;
+import java.time.LocalDate;
 
 @Data
 @AllArgsConstructor
@@ -17,5 +18,5 @@ public class ClubDto {
     private String name;
     private String abbreviation;
     private Date foundingDate;
-    private int totalTrophies;
+    private Integer totalTrophies;
 }

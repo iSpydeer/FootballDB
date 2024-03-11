@@ -5,6 +5,8 @@ import com.ispydeer.footballteamdb.domain.entities.ClubEntity;
 import com.ispydeer.footballteamdb.mappers.impl.ClubMapper;
 import com.ispydeer.footballteamdb.services.ClubService;
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -38,4 +40,41 @@ public class ClubController{
             return new ResponseEntity<>(clubDto, HttpStatus.OK);
         }).orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
+
+    @GetMapping(path="/clubs")
+    public Page<ClubDto> getClubs(Pageable pageable){
+        Page<ClubEntity> clubs = clubService.findAll(pageable);
+        return clubs.map(clubMapper::mapTo);
+    }
+
+    @PutMapping(path = "/clubs/{id}")
+    public ResponseEntity<ClubDto> fullUpdate(@PathVariable("id") Long id, @RequestBody ClubDto clubDto){
+        if(!clubService.exists(id)){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        clubDto.setId(id);
+        ClubEntity clubEntity = clubMapper.mapFrom(clubDto);
+        ClubEntity updatedClubEntity = clubService.save(clubEntity);
+        ClubDto updatedClubDto = clubMapper.mapTo(updatedClubEntity);
+        return new ResponseEntity<>(updatedClubDto, HttpStatus.OK);
+    }
+    @PatchMapping(path = "/clubs/{id}")
+    public ResponseEntity<ClubDto> partialUpdate(@PathVariable("id") Long id, @RequestBody ClubDto clubDto){
+        if(!clubService.exists(id)){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        clubDto.setId(id);
+        ClubEntity clubEntity = clubMapper.mapFrom(clubDto);
+        ClubEntity updatedClubEntity = clubService.partialUpdate(id, clubEntity);
+        ClubDto updatedClubDto = clubMapper.mapTo(updatedClubEntity);
+        return new ResponseEntity<>(updatedClubDto, HttpStatus.OK);
+    }
+
+    @DeleteMapping(path = "/clubs/{id}")
+    public ResponseEntity<ClubDto> deleteClub(@PathVariable("id") Long id){
+        clubService.delete(id);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+
 }
