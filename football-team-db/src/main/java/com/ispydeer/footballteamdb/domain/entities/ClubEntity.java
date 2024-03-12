@@ -18,7 +18,7 @@ import java.time.LocalDate;
 public class ClubEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "club_id_sequence")
     private Long id;
 
     @Column(nullable = false)

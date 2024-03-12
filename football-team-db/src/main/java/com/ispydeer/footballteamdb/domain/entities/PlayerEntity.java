@@ -18,7 +18,7 @@ import java.sql.Date;
 @Table(name = "player")
 public class PlayerEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "player_id_sequence")
     private Long id;
 
     @Column(nullable = false)

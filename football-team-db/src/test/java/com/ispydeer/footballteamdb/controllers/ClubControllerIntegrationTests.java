@@ -38,7 +38,6 @@ public class ClubControllerIntegrationTests {
     @Test
     public void testThatCreateClubSuccessfullyReturnsHttpStatus201AndSavedClub() throws Exception{
         ClubEntity clubEntityBarca = TestDataCreator.createClubEntityBarca();
-        clubEntityBarca.setId(null);
 
         String json = objectMapper.writeValueAsString(clubEntityBarca);
         mockMvc.perform(
@@ -49,7 +48,7 @@ public class ClubControllerIntegrationTests {
                 .andExpect(MockMvcResultMatchers.jsonPath("$.id").isNumber())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.name").value("FC Barcelona"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.abbreviation").value("BAR"))
-//                .andExpect(MockMvcResultMatchers.jsonPath("$.foundingDate").value("1989-02-29"))
+//                .andExpect(MockMvcResultMatchers.jsonPath("$.foundingDate").value("1899-11-29"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.totalTrophies").value(100));
     }
 
@@ -59,13 +58,13 @@ public class ClubControllerIntegrationTests {
         clubService.save(clubEntityBarca);
 
         mockMvc.perform(
-                        MockMvcRequestBuilders.get("/clubs/"+clubEntityBarca.getId())
+                        MockMvcRequestBuilders.get("/clubs/1")
                                 .contentType(MediaType.APPLICATION_JSON)
                 ).andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.id").isNumber())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.name").value("FC Barcelona"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.abbreviation").value("BAR"))
-//                .andExpect(MockMvcResultMatchers.jsonPath("$.foundingDate").value("1989-02-29"))
+//                .andExpect(MockMvcResultMatchers.jsonPath("$.foundingDate").value("1899-11-29"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.totalTrophies").value(100));
     }
 
@@ -93,7 +92,7 @@ public class ClubControllerIntegrationTests {
                 .andExpect(MockMvcResultMatchers.jsonPath("$.content[0].id").isNumber())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.content[0].name").value("FC Barcelona"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.content[0].abbreviation").value("BAR"))
-//                .andExpect(MockMvcResultMatchers.jsonPath("$.content[0].foundingDate").value("1989-02-29"))
+//                .andExpect(MockMvcResultMatchers.jsonPath("$.content[0].foundingDate").value("1899-11-29"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.content[0].totalTrophies").value(100));
     }
 
@@ -103,18 +102,17 @@ public class ClubControllerIntegrationTests {
         clubService.save(clubEntityBarca);
 
         ClubEntity clubEntityRealMadrid = TestDataCreator.createClubEntityRealMadrid();
-        clubEntityRealMadrid.setId(clubEntityBarca.getId());
         String json = objectMapper.writeValueAsString(clubEntityRealMadrid);
 
         mockMvc.perform(
-                        MockMvcRequestBuilders.put("/clubs/"+clubEntityRealMadrid.getId())
+                        MockMvcRequestBuilders.put("/clubs/1")
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .content(json)
                 ).andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.id").isNumber())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.name").value("Real Madrid"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.abbreviation").value("RM"))
-//                .andExpect(MockMvcResultMatchers.jsonPath("$.foundingDate").value("1902-02-06"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.foundingDate").value("1902-02-06"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.totalTrophies").value(99));
 
     }
@@ -127,7 +125,6 @@ public class ClubControllerIntegrationTests {
         clubService.save(clubEntityBarca);
 
         ClubEntity clubEntityRealMadrid = TestDataCreator.createClubEntityRealMadrid();
-        clubEntityRealMadrid.setId(clubEntityBarca.getId());
         String json = objectMapper.writeValueAsString(clubEntityRealMadrid);
 
         mockMvc.perform(
@@ -146,14 +143,14 @@ public class ClubControllerIntegrationTests {
         String json = objectMapper.writeValueAsString(clubEntityBarca);
 
         mockMvc.perform(
-                        MockMvcRequestBuilders.patch("/clubs/"+clubEntityBarca.getId())
+                        MockMvcRequestBuilders.patch("/clubs/1")
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .content(json)
                 ).andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.id").isNumber())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.name").value("Updated"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.abbreviation").value("BAR"))
-//                .andExpect(MockMvcResultMatchers.jsonPath("$.foundingDate").value("1989-02-29"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.foundingDate").value("1899-11-29"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.totalTrophies").value(100));
 
     }
@@ -181,7 +178,7 @@ public class ClubControllerIntegrationTests {
         clubService.save(clubEntityBarca);
 
         mockMvc.perform(
-                MockMvcRequestBuilders.delete("/clubs/" + clubEntityBarca.getId())
+                MockMvcRequestBuilders.delete("/clubs/1")
                         .contentType(MediaType.APPLICATION_JSON)
         ).andExpect(MockMvcResultMatchers.status().isNoContent());
     }
