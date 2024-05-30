@@ -31,7 +31,7 @@ public class ClubController{
         ClubEntity savedEntity = clubService.save(clubEntity);
         return new ResponseEntity<>(clubMapper.mapTo(savedEntity), HttpStatus.CREATED);
     }
-
+    //
     @GetMapping(path = "/clubs/{id}")
     public ResponseEntity<ClubDto> getClub(@PathVariable("id") Long id){
         Optional<ClubEntity> clubEntity = clubService.find(id);
